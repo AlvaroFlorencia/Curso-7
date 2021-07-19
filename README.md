@@ -1,8 +1,8 @@
 # Curso 7
 ------------
 ## Introducción
-En este repositorio de persistencia de datos en JAVA, se encuentran 2 carpetas principales: gatos_app y mensaje_app. El primero es un mini-proyecto de Java, el cual se conecta directamente a una API de imágenes gatos. En el cual se pueden observar imágenes de gato y guardar las favoritas. El segundo proyecto en un sistema de mensajes enlazado con phpMyAdmin en el cual se utilizan las funciones CRUD.
+En este repositorio se encuentra un proyecto de base datos, el cual consiste en un sistema de posts. En este sistema los usuarios, pueden hacer posts y comentarios. Adicionalmente se añadió el archivo con los SELECT, donde se muestran todas las consultas al sistema.
 ## Tecnologías
-- Java
+- MySQL Workbench
 ## Lanzamiento
-En general para poder correr el programa se necesita una IDE que soporte el lenguaje, como Visual Studio Code o Eclipse para editar simplemente, utiliza el editor de tu preferencia (Visual Studio Code, Sublime Text, Brackets).
+En general para correr el programa primeramente se debe instalar cualquier RDBMS, ya sea phhMyAdmin o Workbench.  Posteriormente se debe importar el archivo .SQL.
