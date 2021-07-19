@@ -1,0 +1,131 @@
+
+-- Todos los SELECT de la clase
+
+SELECT * FROM usuarios
+lEFT JOIN posts ON usuarios.id=posts.id -- el de la izquierda es la del select
+WHERE posts.usuario_id IS NULL;  -- Es par qquitar lo de enmedio
+
+SELECT * FROM usuarios
+RIGHT JOIN posts ON usuarios.id=posts.id -- el de la izquierda es la del select
+WHERE posts.usuario_id IS NULL;  -- Es par qquitar lo de enmedio
+
+SELECT * FROM usuarios
+INNER JOIN posts ON usuarios.id=posts.usuario_id; -- el de la izquierda es la del select
+
+SELECT * FROM usuarios
+LEFT JOIN posts ON usuarios.id=posts.usuario_id
+UNION
+SELECT * FROM usuarios
+RIGHT JOIN posts ON usuarios.id=posts.usuario_id
+;
+
+
+SELECT * FROM usuarios
+LEFT JOIN posts ON usuarios.id=posts.usuario_id
+WHERE posts.usuario_id IS NULL
+UNION
+SELECT * FROM usuarios
+RIGHT JOIN posts ON usuarios.id=posts.usuario_id
+WHERE posts.usuario_id IS NULL
+;
+
+
+---
+SeLECT * FROM posts WHERE id<50;
+SeLECT * FROM posts WHERE estatus ='activo';
+SeLECT * FROM posts WHERE id !=50;
+SELECT * FROM posts where titulo LIKE  '%escandalo%';
+SELECT * FROM posts where titulo LIKE  'escandalo%';
+SELECT * FROM posts where fecha_publicacion > '2025-01-01';
+SELECT * FROM posts where fecha_publicacion BETWEEN '2023-01-01' AND '2025-12-31';
+SELECT * FROM posts where YEAR(fecha_publicacion) BETWEEN '2023' AND '2024';
+
+SELECT * FROM posts where usuario_id IS NULL;
+SELECT * FROM posts where categoria_id IS NULL;
+SELECT * FROM posts where usuario_id IS NOT NULL;
+SELECT * FROM posts where categoria_id IS NULL;
+
+SELECT * FROM posts where usuario_id And id <50 And estatus ='activo' And categoria_id=2 And YEAR(fecha_publicacion)='2025'; 
+
+
+
+Select estatus, count(*) post_quantity
+From posts
+Group by estatus;
+
+Select estatus, sum(id) suma_id
+From posts
+Group by estatus;
+
+
+Select YEAR(fecha_publicacion) AS post_year, COUNT(*) AS post_quantity
+From posts
+Group by post_year;
+
+Select MONTHNAME(fecha_publicacion) AS post_month, COUNT(*) AS post_quantity
+From posts
+Group by post_month;
+
+Select estatus, MONTHNAME(fecha_publicacion) AS post_month, COUNT(*) AS post_quantity
+From posts
+Group by post_month;
+
+
+Select *
+From posts ORDER BY fecha_publicacion ASC;
+
+Select *
+From posts ORDER BY fecha_publicacion DESC;
+
+
+Select *
+From posts ORDER BY titulo ASC;
+
+Select *
+From posts ORDER BY usuario_id ASC;
+
+Select *
+From posts ORDER BY fecha_publicacion ASC
+LIMIT 5;
+
+
+Select MONTHNAME(fecha_publicacion) AS post_month, estatus, COUNT(*) AS post_quantity
+FROM posts
+group by estatus, post_month
+ORDER BY post_month
+;
+
+SELECT new_table_projection.date, COUNT(*) AS posts_count
+FROM (
+SELECT DATE(MIN(fecha_publicacion)) AS date, YEAR(fecha_publicacion) AS post_year
+from posts
+GROUP BY post_year
+) As new_table_projection
+GROUP BY  new_table_projection.date
+ORDER BY new_table_projection;
+
+Select * 
+from posts WHERE fecha_publicacion = ( SELECT MAX(fecha_publicacion) FROM posts);
+
+
+
+select posts.titulo, group_concat(nombre_etiqueta)
+from posts 
+INNER JOIN posts_etiquetas ON posts.id = posts_etiquetas.posts_id
+INNER JOIN etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY posts.id;
+
+SELECT * 
+FROM etiquetas
+LEFT JOIN posts_etiquetas ON etiquetas.id= posts_etiquetas.etiqueta_id
+WHERE posts_etiquetas.etiqueta_id IS NULL;
+
+Select u.nickname, COUNT(*) cant_posts, GROUP_CONCAT(nombre_categoria)
+FROM usuarios AS u
+INNER JOIN posts AS p on u.id=p.usuario_id
+INNER JOIN categorias AS c ON c.id=p.categoria_id
+GROUP BY u.id
+ORDER BY cant_posts DESC;
+
+SELECT * FROM usuarios AS u
+LEFT JOIN posts ON u.id =posts.usuario_id WHERE posts.usuario_id IS NULL;
